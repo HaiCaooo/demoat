@@ -12,7 +12,7 @@
 <div class="card card-outline-danger">
     <div class="card-header" style="color:black">Import Student</div>
     <div class="card-body">
-        <form action="~/Group/ReadExcel" method="post" class="form-inline" enctype="multipart/form-data">
+        <form action="~/Attendance/ReadExcel" method="post" class="form-inline" enctype="multipart/form-data">
             <div class="col-md-5">
                 <div class="form-control">
                     <input type="file" id="fileupload" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="upload()" />
@@ -49,9 +49,9 @@
                     <tr>
                         <th>No.</th>
                         <th>StID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>DoB</th>
+                        <th></th>
+                        <th>Course ID</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,10 +63,10 @@
                                 @item.ID
                             </td>
                             <td>
-                                @item.CourseMember.Name
+                                @item.MemberID
                             </td>
                             <td>
-                                @item.CourseMember.Email
+                                @item.SessionID
                             </td>
                             <td>
                                 @item.Status
