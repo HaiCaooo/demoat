@@ -1,0 +1,108 @@
+﻿
+@{
+                ViewBag.Title = "Import";
+                Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+                var ListStudent = TempData["Excelstudent"] as List<AttendanceManagement.Models.Attendance>;
+                int i = 1;
+}
+
+
+
+<div class="card card-outline-danger">
+    <div class="card-header" style="color:black">Import Student</div>
+    <div class="card-body">
+        <form action="~/Group/ReadExcel" method="post" class="form-inline" enctype="multipart/form-data">
+            <div class="col-md-5">
+                <div class="form-control">
+                    <input type="file" id="fileupload" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="upload()" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="submit" value="Preview" id="PreviewDiv" class="btn btn-default btn-block" disabled onclick="window.location ='/AttendanceManagement/Attendance/ReadExcel';" />
+                    </div>
+                    <div class="col-md-3">
+                        @if (ListStudent != null)
+                        {
+                            <input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" onclick="window.location ='/AttendanceManagement/Attendance/InsertExcelData';" />
+                        }
+                        else
+                        {
+                            <input type="button" value="Import" id="ImportDiv" class="btn btn-default btn-block" disabled />
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <input type="button" value="Back" class="btn btn-default btn-block" onclick="window.location='/AttendanceManagement/Attendance/@Session["GroupID"]';" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+    @if (ListStudent != null)
+    {
+        <div class="table-responsive m-t-40">
+            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>StID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>DoB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ListStudent)
+                    {
+                        <tr>
+                            <td>@(i++)</td>
+                            <td>
+                                @item.ID
+                            </td>
+                            <td>
+                                @item.CourseMember.Name
+                            </td>
+                            <td>
+                                @item.CourseMember.Email
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    }
+
+</div>
+
+
+<script>
+	function upload() {
+		if (document.getElementById("fileupload").files.length > 0) {
+			document.getElementById("PreviewDiv").disabled = false;
+		}
+		else {
+			document.getElementById("PreviewDiv").disabled = true;
+		}
+	}
+</script>
+<script src="~/Content/assets/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#example23').DataTable({
+			paging: false,
+			dom: 'Bfrtip',
+			buttons: [
+				'copy', 'excel', 'pdf', 'print'
+			]
+		});
+	})
+</script>
+
+
